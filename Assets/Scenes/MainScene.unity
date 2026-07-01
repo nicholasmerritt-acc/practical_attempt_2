@@ -668,13 +668,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   playerTransform: {fileID: 1521132627}
+  offset: {x: 0, y: 1.5, z: 0}
   yaw: 0
   pitch: 0
-  maxPitch: 0
-  minPitch: 0
+  sensitivityX: 5
+  sensitivityY: 5
+  maxPitch: 50
+  minPitch: -20
   distance: 3
-  focalPoint: {x: 0, y: 1.5, z: 0}
-  offset: {x: 0, y: 1.5, z: 0}
 --- !u!4 &791359608
 Transform:
   m_ObjectHideFlags: 0
@@ -750,6 +751,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1521132627}
   - component: {fileID: 1521132626}
+  - component: {fileID: 1521132628}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -769,6 +771,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9b46dcf6edd30e47ace68fa5dc5e53f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  moveSpeed: 5
 --- !u!4 &1521132627
 Transform:
   m_ObjectHideFlags: 0
@@ -786,6 +789,31 @@ Transform:
   - {fileID: 2130507699}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!143 &1521132628
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1521132625}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &2130507698
 GameObject:
   m_ObjectHideFlags: 0
