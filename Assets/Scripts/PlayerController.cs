@@ -64,19 +64,19 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 cameraForward = cameraTransform.forward;
         Vector3 cameraRight = cameraTransform.right;
-        //1. zero the ys and normalize
+        //1. zero the ys and normalize #STUDY
         cameraRight.y = 0f;
         cameraForward.y = 0f;
         cameraRight.Normalize();
         cameraForward.Normalize();
 
-        //2. ASSEMBLE
+        //2. ASSEMBLE #STUDY
         Vector3 cameraRelatedMoveDirection = ((cameraRight * moveX) + cameraForward * moveZ).normalized;
 
-        //calc camera directed move direction
+        //calc camera directed move direction 
         if (cameraRelatedMoveDirection.sqrMagnitude > .001f)
         {
-            //3. LOOK ROTATION and SLERP
+            //3. LOOK ROTATION and SLERP #STUDY
             Quaternion targetRotation = Quaternion.LookRotation(cameraRelatedMoveDirection);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }

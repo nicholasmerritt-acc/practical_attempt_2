@@ -11,12 +11,4 @@ public class ProjectileMovement : MonoBehaviour
         GetComponent<Rigidbody>().AddForce(speed * transform.forward, ForceMode.Impulse);
         Destroy(gameObject, lifespan);
     }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Enemy"))
-        {
-
-        }
-    }
 }

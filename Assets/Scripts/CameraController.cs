@@ -28,7 +28,11 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        //INPUT
+        if (playerTransform == null)
+        {
+            return;
+        }
+        //INPUT #STUDY
 
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
@@ -36,11 +40,11 @@ public class CameraController : MonoBehaviour
         pitch -= mouseY * sensitivityY;
         pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
 
-        //ROTATE/SWAP
+        //ROTATE/SWAP #STUDY
         Vector3 focalPoint = playerTransform.position + offset;
         Quaternion targetRotation = Quaternion.Euler(pitch, yaw, 0f);
 
-        //f - RFD
+        //f - RFD #STUDY
         transform.position = focalPoint - targetRotation * Vector3.forward * distance;
         transform.rotation = targetRotation;
     }
