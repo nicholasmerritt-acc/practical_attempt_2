@@ -1,78 +1,96 @@
+using System;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     private CharacterController characterController;
     private Transform cameraTransform;
+    private Rigidbody rb;
 
     [Header("Jumping")]
-    private bool hasJumped = false;
-    private float gravity = -20f;
-    private float verticalVelocity = 0f;
+    private bool hasJumpBeenPressed = false;
     [SerializeField] private float jumpVelocity = 9f;
 
+    [Header("Movement")]
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float rotationSpeed = 5f;
+    [SerializeField] private float moveX;
+    [SerializeField] private float moveZ;
+
+    [Header("Firing")]
+    [SerializeField] private GameObject projectile;
+    [SerializeField] private Transform firePoint;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         characterController = GetComponent<CharacterController>();
         cameraTransform = Camera.main.transform;
+        rb = GetComponentInChildren<Rigidbody>();
+    }
+
+    private void HandleInput()
+    {
+        if (Input.GetButtonDown("Jump"))
+        {
+            hasJumpBeenPressed = true;
+        }
+
+        moveX = Input.GetAxisRaw("Horizontal");
+        moveZ = Input.GetAxisRaw("Vertical");
+
+        if (Input.GetButtonDown("Fire2"))
+        {
+            FireProjectile();
+        }
+    }
+
+    private void FireProjectile()
+    {
+        if (projectile != null)
+        {
+            Instantiate(projectile, firePoint.position, transform.rotation);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        //CHECK FALLING and set gravity and velocity
-        bool falling = (verticalVelocity < 0f) && hasJumped;
-        float gravityThisFrame = gravity;
-        if (falling)
-        {
-            gravityThisFrame *= 5f;
-        }
-        verticalVelocity += gravity * Time.deltaTime;
+        HandleInput();
+        HandleMove();
+    }
 
-        //CHECK GROUNDED
-        if (characterController.isGrounded)
-        {
-            if (verticalVelocity < 0f)
-            {
-                verticalVelocity = -2f;
-            }
-            if (Input.GetButtonDown("Jump"))
-            {
-                verticalVelocity = jumpVelocity;
-                Debug.Log("jump");
-                hasJumped = true;
-            }
-        }
-        Vector3 upVelocity = verticalVelocity * Vector3.up;
-
-
-        float moveX = Input.GetAxisRaw("Horizontal");
-        float moveZ = Input.GetAxisRaw("Vertical");
-
+    private void HandleMove()
+    {
         Vector3 cameraForward = cameraTransform.forward;
         Vector3 cameraRight = cameraTransform.right;
-        //zero the ys and normalize
+        //1. zero the ys and normalize
         cameraRight.y = 0f;
         cameraForward.y = 0f;
         cameraRight.Normalize();
         cameraForward.Normalize();
 
-        //ASSEMBLE
-        Vector3 crmd = (cameraRight * moveX + cameraForward * moveZ).normalized;
+        //2. ASSEMBLE
+        Vector3 cameraRelatedMoveDirection = ((cameraRight * moveX) + cameraForward * moveZ).normalized;
 
         //calc camera directed move direction
-        if (crmd.sqrMagnitude > .001f)
+        if (cameraRelatedMoveDirection.sqrMagnitude > .001f)
         {
-            //LOOK ROTATION and SLERP
-            Quaternion targetRotation = Quaternion.LookRotation(crmd);
+            //3. LOOK ROTATION and SLERP
+            Quaternion targetRotation = Quaternion.LookRotation(cameraRelatedMoveDirection);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
 
-        Vector3 finalMove = crmd * moveSpeed;
-        characterController.Move((finalMove + upVelocity) * Time.deltaTime);
+        Vector3 finalMove = cameraRelatedMoveDirection * moveSpeed; // + upVelocity
+        characterController.Move((finalMove) * Time.deltaTime);
+    }
+
+    private void FixedUpdate()
+    {
+        if (hasJumpBeenPressed)
+        {
+            rb.AddForce(Vector3.up * jumpVelocity, ForceMode.Impulse);
+            hasJumpBeenPressed = false;
+        }
     }
 }
