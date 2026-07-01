@@ -106,10 +106,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31d748b9097dab046b40676bc0641f08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  playerDamage: 1
+  projectileDamage: 1
   target: {fileID: 0}
   scorer: {fileID: 0}
-  speed: 5
-  damage: 1
+  speed: 4
   points: 10
 --- !u!54 &-5569422040523551838
 Rigidbody:

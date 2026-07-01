@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
+    [SerializeField] private int maxScore = 300;
+    [SerializeField] private float initialSpawnTime = 0.1f;
+    [SerializeField] private float delayTime = 5.0f;
+
     [SerializeField] private GameObject[] spawnPoints;
     [SerializeField] private GameObject[] enemies;
     [SerializeField] private Transform player;
@@ -10,12 +14,12 @@ public class EnemySpawner : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        InvokeRepeating(nameof(Spawn), 0.1f, 5.0f);
+        InvokeRepeating(nameof(Spawn), initialSpawnTime, delayTime);
     }
 
     private void Spawn()
     {
-        if (scorer.GetScore() > 300 || player == null)
+        if (scorer.GetScore() > maxScore || player == null)
         {
             Destroy(gameObject);
             return;

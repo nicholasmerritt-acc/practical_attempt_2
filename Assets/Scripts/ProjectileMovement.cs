@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class ProjectileMovement : MonoBehaviour
 {
-    private const float speed = 10.0f;
-    private const float lifespan = 5.0f;
+    [SerializeField] private float speed = 50.0f;
+    [SerializeField] private float lifespan = 5.0f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

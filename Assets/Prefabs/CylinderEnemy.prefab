@@ -142,10 +142,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31d748b9097dab046b40676bc0641f08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
+  playerDamage: 1
+  projectileDamage: 1
   target: {fileID: 0}
   scorer: {fileID: 0}
-  speed: 8
-  damage: 1
+  speed: 6
   points: 30
 --- !u!54 &5214331888585121039
 Rigidbody:
@@ -172,5 +173,5 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0

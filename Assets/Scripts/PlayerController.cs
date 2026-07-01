@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpVelocity = 9f;
 
     [Header("Movement")]
+    [SerializeField] private float minMoveThreshold = .001f;
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float rotationSpeed = 5f;
     [SerializeField] private float moveX;
@@ -74,7 +75,7 @@ public class PlayerController : MonoBehaviour
         Vector3 cameraRelatedMoveDirection = ((cameraRight * moveX) + cameraForward * moveZ).normalized;
 
         //calc camera directed move direction 
-        if (cameraRelatedMoveDirection.sqrMagnitude > .001f)
+        if (cameraRelatedMoveDirection.sqrMagnitude > minMoveThreshold)
         {
             //3. LOOK ROTATION and SLERP #STUDY
             Quaternion targetRotation = Quaternion.LookRotation(cameraRelatedMoveDirection);

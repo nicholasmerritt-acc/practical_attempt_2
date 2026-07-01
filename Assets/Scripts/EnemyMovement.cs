@@ -2,14 +2,13 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
-    private const int playerDamage = 1;
-    private const int projectileDamage = 1;
+    [SerializeField] private int playerDamage = 1;
+    [SerializeField] private int projectileDamage = 1;
 
     public Transform target;
     public Scorer scorer;
 
     [SerializeField] private int speed = 5;
-    [SerializeField] private int damage = 1;
     [SerializeField] private int points = 10;
 
     void Update()
